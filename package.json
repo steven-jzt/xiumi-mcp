@@ -1,0 +1,42 @@
+{
+  "name": "xiumi-mcp",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "MCP server that lets an AI agent build WeChat article layouts in the Xiumi (秀米) editor",
+  "license": "MIT",
+  "author": "steven-jzt",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "xiumi",
+    "秀米",
+    "wechat",
+    "公众号",
+    "playwright",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/steven-jzt/xiumi-mcp.git"
+  },
+  "homepage": "https://github.com/steven-jzt/xiumi-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/steven-jzt/xiumi-mcp/issues"
+  },
+  "bin": {
+    "xiumi-mcp": "src/index.ts"
+  },
+  "scripts": {
+    "start": "node src/index.ts",
+    "dev": "node src/index.ts"
+  },
+  "engines": {
+    "node": ">=22.18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "playwright-core": "^1.64.1",
+    "zod": "^4.6.7"
+  }
+}

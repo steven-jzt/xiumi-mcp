@@ -1,0 +1,11 @@
+- insert:
+    - id: xiumi-mcp
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: xiumi
+        transport: stdio
+        command: 'node'
+        args:
+          - 'C:\\path\\to\\xiumi-mcp\\src\\index.ts'
+        cwd: 'C:\\path\\to\\xiumi-mcp'
+        failOnStartupError: true
