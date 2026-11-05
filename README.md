@@ -105,9 +105,9 @@ Windows 示例（注意双反斜杠）：
 
 ## 效果示例
 
-| 整套商店模板 | 组件组合排版 |
+| 组件组合排版（小雪） | 整套商店模板（运动会） |
 | --- | --- |
-| ![运动会](docs/sports-preview.png) | ![校园运动会](docs/campus-preview.png) |
+| ![组件组合](docs/component-preview.png) | ![整套模板](docs/sports-preview.png) |
 
 ## 原理（逆向记录）
 
