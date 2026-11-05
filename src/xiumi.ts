@@ -26,7 +26,7 @@ async function dismissRecoveryDialog(page: Page): Promise<boolean> {
           el.getBoundingClientRect().height > 0,
       );
       if (!btn) return false;
-      btn.click();
+      (btn as HTMLElement).click();
       return true;
     })
     .catch(() => false);
@@ -66,8 +66,8 @@ export async function getStatus(page: Page): Promise<XiumiStatus> {
   return page.evaluate(() => {
     const isXiumi = location.hostname.endsWith("xiumi.us");
     const studioRoot = document.querySelector(".tn-studio-root");
-    const paper = document.querySelector(".tn-page-inst");
-    const titleInput = document.querySelector(".tn-meta-panel input");
+    const paper = document.querySelector(".tn-page-inst") as HTMLElement | null;
+    const titleInput = document.querySelector(".tn-meta-panel input") as HTMLInputElement | null;
     const signIn = document.querySelector(".usr-sign-in");
     const loggedIn =
       isXiumi &&
@@ -216,8 +216,8 @@ export async function searchTemplates(
 
 export async function getTopLevelComps(page: Page): Promise<Array<{ id: string; text: string; slots: number; images: number }>> {
   return page.evaluate(() =>
-    [...document.querySelectorAll(".tn-page-inst .tn-comp-top-level")].map((el) => {
-      const cells = [...el.querySelectorAll(".tn-cell-text")].filter((c) => {
+    [...document.querySelectorAll<HTMLElement>(".tn-page-inst .tn-comp-top-level")].map((el) => {
+      const cells = [...el.querySelectorAll<HTMLElement>(".tn-cell-text")].filter((c) => {
         const style = getComputedStyle(c);
         return style.display !== "none" && style.visibility !== "hidden";
       });
@@ -325,7 +325,7 @@ export async function setTypography(
 ): Promise<{ ok: boolean; changed: number; error?: string }> {
   return page.evaluate(
     ({ scope, minChars, fs, lh, ls, color }) => {
-      const cells = [...document.querySelectorAll(".tn-page-inst .tn-cell-text")];
+      const cells = [...document.querySelectorAll<HTMLElement>(".tn-page-inst .tn-cell-text")];
       let changed = 0;
       let rootScope: any = null;
       for (const cell of cells) {
@@ -472,7 +472,7 @@ export async function insertTemplate(
     const fresh = all.filter((el) => !beforeIds.includes(el.getAttribute("tn-uuid")));
     const top = fresh.filter((el) => !fresh.some((other) => other !== el && other.contains(el)));
     return top.map((el) => {
-      const cells = [...el.querySelectorAll(".tn-cell-text")];
+      const cells = [...el.querySelectorAll<HTMLElement>(".tn-cell-text")];
       return {
         id: el.getAttribute("tn-uuid") || "",
         slots: cells.map((c) => {
@@ -503,7 +503,7 @@ export async function fillText(
     ({ id, idx, value }) => {
       const root = document.querySelector(`.tn-page-inst [tn-uuid="${id}"]`);
       if (!root) return { ok: false, error: `找不到组件 ${id}` };
-      const cells = [...root.querySelectorAll(".tn-cell-text")].filter((c) => {
+      const cells = [...root.querySelectorAll<HTMLElement>(".tn-cell-text")].filter((c) => {
         const style = getComputedStyle(c);
         return style.display !== "none" && style.visibility !== "hidden";
       });
@@ -554,7 +554,7 @@ export async function setSummary(page: Page, summary: string): Promise<string> {
 export async function exportHtml(page: Page): Promise<{ ok: boolean; html: string; error?: string }> {
   await page.bringToFront().catch(() => {});
   const opened = await page.evaluate(() => {
-    const btn = [...document.querySelectorAll("header button")].find((b) => b.innerText.trim() === "导出");
+    const btn = [...document.querySelectorAll<HTMLButtonElement>("header button")].find((b) => b.innerText.trim() === "导出");
     if (!btn) return false;
     btn.click();
     return true;
@@ -563,7 +563,7 @@ export async function exportHtml(page: Page): Promise<{ ok: boolean; html: strin
   await page.waitForTimeout(500);
 
   const clicked = await page.evaluate(() => {
-    const link = [...document.querySelectorAll("header a")].find((a) => a.innerText.trim() === "继续用复制粘贴");
+    const link = [...document.querySelectorAll<HTMLAnchorElement>("header a")].find((a) => a.innerText.trim() === "继续用复制粘贴");
     if (!link) return false;
     link.click();
     return true;
@@ -596,7 +596,7 @@ export async function exportHtml(page: Page): Promise<{ ok: boolean; html: strin
 export async function saveArticle(page: Page): Promise<{ ok: boolean; message: string; url: string }> {
   const before = await page.evaluate(() => document.body.innerText);
   const clicked = await page.evaluate(() => {
-    const btn = [...document.querySelectorAll("header button")].find((b) => b.innerText.trim() === "保存");
+    const btn = [...document.querySelectorAll<HTMLButtonElement>("header button")].find((b) => b.innerText.trim() === "保存");
     if (!btn) return false;
     btn.click();
     return true;

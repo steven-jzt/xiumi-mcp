@@ -1,5 +1,7 @@
 # xiumi-mcp
 
+[![CI](https://github.com/steven-jzt/xiumi-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/steven-jzt/xiumi-mcp/actions/workflows/ci.yml)
+
 让 AI Agent 直接操作[秀米](https://xiumi.us)图文编辑器做公众号排版的 MCP 服务。
 
 它用一个专属浏览器（持久化登录态）打开秀米编辑器，通过编辑器自身的 AngularJS 数据模型和官方接口完成排版工作，而不是模拟鼠标一条条拖组件。
@@ -146,9 +148,22 @@ src/
   xiumi.ts      # 秀米页面操作（模板、填字、换图、排版、导出、保存、删除）
   browser.ts    # 浏览器启动、CDP 连接、登录态复用
   config.ts     # 路径、端口、环境变量
+  globals.d.ts  # 页面内注入的全局类型（angular / UE）
+test/
+  smoke.mjs     # CI 冒烟测试：启动服务并校验 16 个工具注册
+.github/workflows/ci.yml  # Node 22/24 类型检查 + 冒烟
 integrations/dsh/  # DeepSeek Harness 配置型 bundle（可选）
 docs/              # 截图
 ```
+
+## 开发与测试
+
+```bash
+npm run typecheck   # tsc --noEmit
+npm run smoke       # 启动 MCP 服务，校验工具注册（不需要浏览器）
+```
+
+CI 在 Node 22.x / 24.x 上跑同样的两步，见 [.github/workflows/ci.yml](.github/workflows/ci.yml)。
 
 ## 免责声明
 
